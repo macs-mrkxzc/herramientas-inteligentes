@@ -119,7 +119,7 @@
       border-radius: 10px;
       text-align: right;
       margin-bottom: 10px;
-      height: 50px;
+      height: 100px;
       overflow-x: auto;
       user-select: none;
     }
@@ -127,7 +127,7 @@
       font-size: 0.9em;
       color: #ccc;
       margin-bottom: 10px;
-      height: 45px;
+      height: 200px;
       overflow-y: auto;
       background: #111;
       border-radius: 8px;
@@ -215,7 +215,6 @@
       <p>Marco Cordero</p>
       <div id="menu">
         <button class="btn-menu" onclick="mostrarSeccion('calculadora')">Calculadora Científica</button>
-        <button class="btn-menu" onclick="mostrarSeccion('buscador')">Buscador de Productos</button>
         <button class="btn-menu" disabled title="Próximamente">Conversor de Unidades</button>
         <button class="btn-menu" disabled title="Próximamente">Historial Detallado</button>
       </div>
@@ -274,14 +273,7 @@
     </section>
 
     <!-- Buscador de Productos -->
-    <section id="buscador">
-      <button class="btnVolver" onclick="mostrarSeccion('inicio')">← Volver al Menú</button>
-      <div id="barcode-scanner"></div>
-      <div id="barcode-result">Escanea un código de barras o ingresa el código aquí:</div>
-      <input type="text" id="codigoManual" placeholder="Ingresar código manualmente" />
-      <button class="btn-menu" onclick="buscarProducto()">Buscar Producto</button>
-      <div id="resultadoBusqueda" style="margin-top:15px; text-align:center; font-weight:600;"></div>
-    </section>
+    
   </div>
 
   <!-- QuaggaJS para escaneo -->
