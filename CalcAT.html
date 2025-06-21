@@ -309,7 +309,7 @@
     function reproducirSonido() {}
     function actualizarHistorial(nuevoValor) {
       historialDatos.unshift(nuevoValor);
-      if (historialDatos.length > 5) historialDatos.pop();
+      if (historialDatos.length > 10) historialDatos.pop();
       historial.innerHTML = historialDatos.map(x => `→ ${x}`).join('<br>');
     }
     function agregar(valor) {
