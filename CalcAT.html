@@ -5,6 +5,7 @@
   <title>Herramientas Inteligentes – Marco Cordero</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    /* Reset y estilos base */
     * {
       box-sizing: border-box;
     }
@@ -40,6 +41,7 @@
     section.active {
       display: flex;
     }
+    /* Pantalla inicio */
     #inicio {
       background: linear-gradient(135deg, #36454f, #212121);
       justify-content: center;
@@ -86,6 +88,7 @@
     .btn-menu:hover {
       background: #5a616b;
     }
+    /* Botón volver */
     .btnVolver {
       background: #666;
       border: none;
@@ -102,134 +105,420 @@
     .btnVolver:hover {
       background: #888;
     }
+    /* Calculadora */
+    #calculadora {
+      background: #2b2d31;
+      border-radius: 0 0 16px 16px;
+      box-shadow: inset 0 0 10px #000;
+    }
+    .pantalla {
+      background: #000;
+      color: #0f0;
+      font-size: 2em;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: right;
+      margin-bottom: 10px;
+      height: 75px;
+      overflow-x: auto;
+      user-select: none;
+    }
+    .historial {
+      font-size: 0.9em;
+      color: #ccc;
+      margin-bottom: 10px;
+      height: 300px;
+      overflow-y: auto;
+      background: #111;
+      border-radius: 8px;
+      padding: 5px 10px;
+    }
+    .teclado {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      user-select: none;
+    }
+    .boton {
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 15px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .boton:hover { background: #666; }
+    .boton.operacion { background: #f39c12; }
+    .boton.igual { background: #27ae60; grid-column: span 2; }
+    .boton.funcion { background: #8e44ad; }
+
+    /* Conversor de medidas */
+    #conversor {
+      background: #2b2d31;
+      border-radius: 0 0 16px 16px;
+      box-shadow: inset 0 0 10px #000;
+      padding: 15px;
+    }
+    #conversor label, #conversor select, #conversor input, #conversor button {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 1em;
+      border-radius: 8px;
+      padding: 10px;
+      border: none;
+    }
+    #conversor button {
+      background-color: #27ae60;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    #conversor button:hover {
+      background-color: #2ecc71;
+    }
+    #resultadoConversor {
+      color: #0f0;
+      font-weight: 700;
+      font-size: 1.2em;
+      margin-top: 10px;
+      min-height: 1.5em;
+    }
+
+    /* Historial global */
+    #historialGlobal {
+      font-size: 0.9em;
+      color: #ccc;
+      margin-top: 10px;
+      height: 200px;
+      overflow-y: auto;
+      background: #111;
+      border-radius: 8px;
+      padding: 10px;
+      user-select: text;
+    }
+    #historialBotones {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      justify-content: flex-end;
+    }
+    #historialBotones button {
+      background: #666;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 600;
+      user-select: none;
+      transition: background 0.3s;
+    }
+    #historialBotones button:hover {
+      background: #888;
+    }
   </style>
 </head>
 <body>
   <div id="app">
+    <!-- Pantalla Inicio -->
     <section id="inicio" class="active">
+      <svg viewBox="0 0 300 300" role="img" aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg">
+        <title>Logo Herramientas Inteligentes</title>
+        <desc>Logo con engranaje, chip y llave inglesa en colores vibrantes y texto</desc>
+        <circle cx="150" cy="150" r="140" fill="#f0f4f8"/>
+        <g transform="translate(60,70) scale(1.2)">
+          <circle cx="50" cy="50" r="40" fill="#ff6f61"/>
+          <path fill="#fff" d="M50 15 L57 30 L72 33 L60 45 L63 60 L50 55 L37 60 L40 45 L28 33 L43 30 Z"/>
+          <circle cx="50" cy="50" r="15" fill="#f9bf45"/>
+        </g>
+        <rect x="150" y="90" width="90" height="70" rx="12" ry="12" fill="#5dade2" />
+        <rect x="170" y="110" width="50" height="30" rx="5" ry="5" fill="#85c1e9" />
+        <line x1="160" y1="90" x2="160" y2="70" stroke="#2874a6" stroke-width="3"/>
+        <line x1="235" y1="90" x2="235" y2="70" stroke="#2874a6" stroke-width="3"/>
+        <line x1="160" y1="160" x2="160" y2="180" stroke="#2874a6" stroke-width="3"/>
+        <line x1="235" y1="160" x2="235" y2="180" stroke="#2874a6" stroke-width="3"/>
+        <path fill="#28b463" stroke="#196f3d" stroke-width="2" d="M70 210 l40 -40 l10 10 l-40 40 z"/>
+        <rect x="90" y="210" width="20" height="30" fill="#28b463" stroke="#196f3d" stroke-width="2" rx="4" ry="4"/>
+      </svg>
       <h1>Herramientas Inteligentes</h1>
       <p>Marco Cordero</p>
       <div id="menu">
         <button class="btn-menu" onclick="mostrarSeccion('calculadora')">Calculadora Científica</button>
-        <button class="btn-menu" onclick="mostrarSeccion('conversor')">Conversor de Medidas</button>
+        <button class="btn-menu" onclick="mostrarSeccion('conversor')">Conversor de Unidades</button>
+        <button class="btn-menu" disabled title="Próximamente">Historial Detallado</button>
       </div>
     </section>
 
+    <!-- Calculadora -->
     <section id="calculadora">
-      <button class="btnVolver" onclick="mostrarSeccion('inicio')">← Volver</button>
-      <input id="pantalla" class="pantalla" readonly value="0" style="margin-bottom:10px; text-align:right; font-size:1.5em; padding:10px; border-radius:8px; width:100%;">
-      <div id="teclado" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
-        <button onclick="agregar('7')">7</button>
-        <button onclick="agregar('8')">8</button>
-        <button onclick="agregar('9')">9</button>
-        <button onclick="operar('/')">÷</button>
-        <button onclick="agregar('4')">4</button>
-        <button onclick="agregar('5')">5</button>
-        <button onclick="agregar('6')">6</button>
-        <button onclick="operar('*')">×</button>
-        <button onclick="agregar('1')">1</button>
-        <button onclick="agregar('2')">2</button>
-        <button onclick="agregar('3')">3</button>
-        <button onclick="operar('-')">−</button>
-        <button onclick="agregar('0')">0</button>
-        <button onclick="agregar('.')">.</button>
-        <button onclick="calcular()">=</button>
-        <button onclick="operar('+')">+</button>
-        <button onclick="limpiar()" style="grid-column: span 4;">C</button>
+      <button class="btnVolver" onclick="mostrarSeccion('inicio')">← Volver al Menú</button>
+      <div id="pantalla" class="pantalla">0</div>
+      <div class="teclado">
+        <button class="boton funcion" onclick="memoria('+')">M+</button>
+        <button class="boton funcion" onclick="memoria('-')">M-</button>
+        <button class="boton funcion" onclick="memoria('recuperar')">MR</button>
+        <button class="boton funcion" onclick="memoria('borrar')">MC</button>
+        <button class="boton" onclick="limpiar()">C</button>
+
+        <button class="boton funcion" onclick="funcion('sin')">sin</button>
+        <button class="boton funcion" onclick="funcion('cos')">cos</button>
+        <button class="boton funcion" onclick="funcion('tan')">tan</button>
+        <button class="boton funcion" onclick="funcion('log')">log</button>
+        <button class="boton funcion" onclick="funcion('ln')">ln</button>
+
+        <button class="boton funcion" onclick="funcion('sqrt')">√</button>
+        <button class="boton funcion" onclick="funcion('cbrt')">∛</button>
+        <button class="boton funcion" onclick="funcion('pow2')">x²</button>
+        <button class="boton funcion" onclick="funcion('pow3')">x³</button>
+        <button class="boton funcion" onclick="funcion('exp')">e^x</button>
+
+        <button class="boton" onclick="agregar('7')">7</button>
+        <button class="boton" onclick="agregar('8')">8</button>
+        <button class="boton" onclick="agregar('9')">9</button>
+        <button class="boton operacion" onclick="operar('/')">÷</button>
+        <button class="boton funcion" onclick="funcion('porcentaje')">%</button>
+
+        <button class="boton" onclick="agregar('4')">4</button>
+        <button class="boton" onclick="agregar('5')">5</button>
+        <button class="boton" onclick="agregar('6')">6</button>
+        <button class="boton operacion" onclick="operar('*')">×</button>
+        <button class="boton funcion" onclick="funcion('descuento')">Desc</button>
+
+        <button class="boton" onclick="agregar('1')">1</button>
+        <button class="boton" onclick="agregar('2')">2</button>
+        <button class="boton" onclick="agregar('3')">3</button>
+        <button class="boton operacion" onclick="operar('-')">−</button>
+        <button class="boton funcion" onclick="funcion('pi')">π</button>
+
+        <button class="boton" onclick="agregar('0')">0</button>
+        <button class="boton" onclick="agregar('.')">.</button>
+        <button class="boton" onclick="borrar()">←</button>
+        <button class="boton operacion" onclick="operar('+')">+</button>
+        <button class="boton igual" onclick="calcular()">=</button>
+
+        <button class="boton funcion" onclick="funcion('factorial')">n!</button>
       </div>
     </section>
 
+    <!-- Conversor de Unidades -->
     <section id="conversor">
-      <button class="btnVolver" onclick="mostrarSeccion('inicio')">← Volver</button>
-      <h2 style="text-align: center; margin-bottom: 20px;">Conversor de Medidas</h2>
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
-        <input id="valorEntrada" type="number" placeholder="Ingresa el valor" style="width: 80%; padding: 10px; border-radius: 8px; font-size: 1.1em;">
-        <div style="display: flex; gap: 10px; justify-content: center;">
-          <select id="unidadOrigen" style="padding: 10px; border-radius: 8px; font-size: 1.1em;">
-            <option value="m">Metro (m)</option>
-            <option value="cm">Centímetro (cm)</option>
-            <option value="mm">Milímetro (mm)</option>
-            <option value="km">Kilómetro (km)</option>
-            <option value="in">Pulgada (in)</option>
-            <option value="ft">Pie (ft)</option>
-            <option value="yd">Yarda (yd)</option>
-          </select>
-          <select id="unidadDestino" style="padding: 10px; border-radius: 8px; font-size: 1.1em;">
-            <option value="m">Metro (m)</option>
-            <option value="cm">Centímetro (cm)</option>
-            <option value="mm">Milímetro (mm)</option>
-            <option value="km">Kilómetro (km)</option>
-            <option value="in">Pulgada (in)</option>
-            <option value="ft">Pie (ft)</option>
-            <option value="yd">Yarda (yd)</option>
-          </select>
-        </div>
-        <button onclick="convertirMedida()" class="btn-menu">Convertir</button>
-        <div id="resultadoConversor" style="margin-top: 20px; font-size: 1.2em; color: #0f0; text-align: center;"></div>
-      </div>
+      <button class="btnVolver" onclick="mostrarSeccion('inicio')">← Volver al Menú</button>
+      <label for="valorEntrada">Valor a convertir:</label>
+      <input type="number" id="valorEntrada" placeholder="Ingrese un número" />
+      
+      <label for="unidadOrigen">Unidad de origen:</label>
+      <select id="unidadOrigen">
+        <option value="m">Metro (m)</option>
+        <option value="km">Kilómetro (km)</option>
+        <option value="cm">Centímetro (cm)</option>
+        <option value="mm">Milímetro (mm)</option>
+        <option value="mi">Milla (mi)</option>
+        <option value="yd">Yarda (yd)</option>
+        <option value="ft">Pie (ft)</option>
+        <option value="in">Pulgada (in)</option>
+      </select>
+
+      <label for="unidadDestino">Unidad de destino:</label>
+      <select id="unidadDestino">
+        <option value="m">Metro (m)</option>
+        <option value="km">Kilómetro (km)</option>
+        <option value="cm">Centímetro (cm)</option>
+        <option value="mm">Milímetro (mm)</option>
+        <option value="mi">Milla (mi)</option>
+        <option value="yd">Yarda (yd)</option>
+        <option value="ft">Pie (ft)</option>
+        <option value="in">Pulgada (in)</option>
+      </select>
+
+      <button onclick="convertirMedida()">Convertir</button>
+      <div id="resultadoConversor"></div>
     </section>
+
+    <!-- Historial Unificado -->
+    <div id="historialGlobal"></div>
+    <div id="historialBotones">
+      <button onclick="exportarHistorial()">📤 Exportar Historial</button>
+      <button onclick="limpiarHistorial()">🧹 Limpiar Historial</button>
+    </div>
+
   </div>
+
   <script>
+    // Navegación entre secciones
     function mostrarSeccion(id) {
-      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('section').forEach(sec => {
+        sec.classList.remove('active');
+      });
       document.getElementById(id).classList.add('active');
     }
 
+    // Variables calculadora
     let pantalla = document.getElementById('pantalla');
     let operacion = '';
     let nuevo = false;
+    let memoriaValor = 0;
 
+    // Historial global
+    const historialGlobal = document.getElementById('historialGlobal');
+    let historialDatos = [];
+
+    function agregarAlHistorial(texto) {
+      historialDatos.unshift(texto);
+      if (historialDatos.length > 20) historialDatos.pop();
+      historialGlobal.innerHTML = historialDatos.map(x => `→ ${x}`).join('<br>');
+    }
+
+    function actualizarHistorial(nuevoValor) {
+      agregarAlHistorial(nuevoValor);
+    }
+
+    // Calculadora funciones
     function agregar(valor) {
-      if (pantalla.value === '0' || nuevo) {
-        pantalla.value = valor;
+      if (pantalla.textContent === '0' || nuevo) {
+        pantalla.textContent = valor;
         nuevo = false;
       } else {
-        pantalla.value += valor;
+        pantalla.textContent += valor;
       }
     }
     function operar(op) {
-      operacion += pantalla.value + op;
+      operacion += pantalla.textContent + op;
       nuevo = true;
     }
     function calcular() {
       try {
-        operacion += pantalla.value;
+        operacion += pantalla.textContent;
         let resultado = eval(operacion);
-        pantalla.value = resultado;
+        actualizarHistorial(`${operacion} = ${resultado}`);
+        pantalla.textContent = resultado;
         operacion = '';
         nuevo = true;
       } catch {
-        pantalla.value = 'Error';
+        pantalla.textContent = 'Error';
         operacion = '';
       }
     }
     function limpiar() {
-      pantalla.value = '0';
+      pantalla.textContent = '0';
       operacion = '';
     }
+    function borrar() {
+      let txt = pantalla.textContent;
+      pantalla.textContent = txt.length > 1 ? txt.slice(0, -1) : '0';
+    }
+    function funcion(tipo) {
+      let num = parseFloat(pantalla.textContent);
+      let res;
+      switch (tipo) {
+        case 'sqrt': res = Math.sqrt(num); break;
+        case 'cbrt': res = Math.cbrt(num); break;
+        case 'pow2': res = Math.pow(num, 2); break;
+        case 'pow3': res = Math.pow(num, 3); break;
+        case 'log': res = Math.log10(num); break;
+        case 'ln': res = Math.log(num); break;
+        case 'sin': res = Math.sin(num * Math.PI / 180); break;
+        case 'cos': res = Math.cos(num * Math.PI / 180); break;
+        case 'tan': res = Math.tan(num * Math.PI / 180); break;
+        case 'exp': res = Math.exp(num); break;
+        case 'pi': res = Math.PI; break;
+        case 'porcentaje': res = num / 100; break;
+        case 'descuento':
+          let descuento = prompt("¿Porcentaje de descuento?");
+          if (descuento !== null && !isNaN(descuento)) {
+            res = num - (num * (parseFloat(descuento) / 100));
+          } else {
+            res = num;
+          }
+          break;
+        case 'factorial':
+          res = 1;
+          if (num < 0 || !Number.isInteger(num)) {
+            res = 'Error';
+          } else {
+            for (let i = 1; i <= num; i++) res *= i;
+          }
+          break;
+        default:
+          res = num;
+      }
+      actualizarHistorial(`${tipo}(${num}) = ${res}`);
+      pantalla.textContent = res.toString().substring(0, 14);
+      nuevo = true;
+    }
+    function memoria(accion) {
+      let actual = parseFloat(pantalla.textContent);
+      switch (accion) {
+        case '+': memoriaValor += actual; break;
+        case '-': memoriaValor -= actual; break;
+        case 'recuperar':
+          pantalla.textContent = memoriaValor.toString();
+          nuevo = true;
+          break;
+        case 'borrar': memoriaValor = 0; break;
+      }
+    }
 
+    // Conversor de unidades
     const factores = {
       m: 1,
-      cm: 100,
-      mm: 1000,
-      km: 0.001,
-      in: 39.3701,
-      ft: 3.28084,
-      yd: 1.09361
+      km: 1000,
+      cm: 0.01,
+      mm: 0.001,
+      mi: 1609.344,
+      yd: 0.9144,
+      ft: 0.3048,
+      in: 0.0254,
     };
 
     function convertirMedida() {
-      const valor = parseFloat(document.getElementById("valorEntrada").value);
-      const origen = document.getElementById("unidadOrigen").value;
-      const destino = document.getElementById("unidadDestino").value;
-      const resultadoDiv = document.getElementById("resultadoConversor");
+      const valor = parseFloat(document.getElementById('valorEntrada').value);
+      const origen = document.getElementById('unidadOrigen').value;
+      const destino = document.getElementById('unidadDestino').value;
+      const resultadoDiv = document.getElementById('resultadoConversor');
+
       if (isNaN(valor)) {
-        resultadoDiv.textContent = "Por favor ingresa un valor válido.";
+        resultadoDiv.textContent = "Por favor, ingrese un número válido.";
         return;
       }
-      const valorEnMetros = valor / factores[origen];
-      const valorConvertido = valorEnMetros * factores[destino];
-      resultadoDiv.textContent = `${valor} ${origen} = ${valorConvertido.toFixed(4)} ${destino}`;
+
+      // Convertir a metros
+      const valorEnMetros = valor * factores[origen];
+      // Convertir a unidad destino
+      const resultado = valorEnMetros / factores[destino];
+
+      resultadoDiv.textContent = `${valor} ${origen} = ${resultado.toFixed(6)} ${destino}`;
+      agregarAlHistorial(`Convertir: ${valor} ${origen} = ${resultado.toFixed(6)} ${destino}`);
+    }
+
+    // Exportar historial
+    function exportarHistorial() {
+      if(historialDatos.length === 0) {
+        alert("No hay historial para exportar.");
+        return;
+      }
+      const texto = historialDatos.slice().reverse().join('\n');
+      const blob = new Blob([texto], {type: 'text/plain'});
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'historial_herramientas_inteligentes.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Limpiar historial
+    function limpiarHistorial() {
+      if(confirm("¿Seguro que quieres limpiar el historial?")) {
+        historialDatos = [];
+        historialGlobal.innerHTML = '';
+      }
     }
   </script>
 </body>
