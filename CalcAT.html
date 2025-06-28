@@ -107,39 +107,43 @@
 <body>
   <div id="app">
     <section id="inicio" class="active">
-      <svg viewBox="0 0 300 300" role="img" aria-labelledby="title desc" xmlns="http://www.w3.org/2000/svg">
-        <title>Logo Herramientas Inteligentes</title>
-        <desc>Logo con engranaje, chip y llave inglesa en colores vibrantes y texto</desc>
-        <circle cx="150" cy="150" r="140" fill="#f0f4f8"/>
-        <g transform="translate(60,70) scale(1.2)">
-          <circle cx="50" cy="50" r="40" fill="#ff6f61"/>
-          <path fill="#fff" d="M50 15 L57 30 L72 33 L60 45 L63 60 L50 55 L37 60 L40 45 L28 33 L43 30 Z"/>
-          <circle cx="50" cy="50" r="15" fill="#f9bf45"/>
-        </g>
-        <rect x="150" y="90" width="90" height="70" rx="12" ry="12" fill="#5dade2" />
-        <rect x="170" y="110" width="50" height="30" rx="5" ry="5" fill="#85c1e9" />
-        <line x1="160" y1="90" x2="160" y2="70" stroke="#2874a6" stroke-width="3"/>
-        <line x1="235" y1="90" x2="235" y2="70" stroke="#2874a6" stroke-width="3"/>
-        <line x1="160" y1="160" x2="160" y2="180" stroke="#2874a6" stroke-width="3"/>
-        <line x1="235" y1="160" x2="235" y2="180" stroke="#2874a6" stroke-width="3"/>
-        <path fill="#28b463" stroke="#196f3d" stroke-width="2" d="M70 210 l40 -40 l10 10 l-40 40 z"/>
-        <rect x="90" y="210" width="20" height="30" fill="#28b463" stroke="#196f3d" stroke-width="2" rx="4" ry="4"/>
-      </svg>
       <h1>Herramientas Inteligentes</h1>
       <p>Marco Cordero</p>
       <div id="menu">
+        <button class="btn-menu" onclick="mostrarSeccion('calculadora')">Calculadora Científica</button>
         <button class="btn-menu" onclick="mostrarSeccion('conversor')">Conversor de Medidas</button>
-        <button class="btn-menu" disabled title="Próximamente">Calculadora Científica</button>
-        <button class="btn-menu" disabled title="Próximamente">Historial Detallado</button>
+      </div>
+    </section>
+
+    <section id="calculadora">
+      <button class="btnVolver" onclick="mostrarSeccion('inicio')">← Volver</button>
+      <input id="pantalla" class="pantalla" readonly value="0" style="margin-bottom:10px; text-align:right; font-size:1.5em; padding:10px; border-radius:8px; width:100%;">
+      <div id="teclado" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
+        <button onclick="agregar('7')">7</button>
+        <button onclick="agregar('8')">8</button>
+        <button onclick="agregar('9')">9</button>
+        <button onclick="operar('/')">÷</button>
+        <button onclick="agregar('4')">4</button>
+        <button onclick="agregar('5')">5</button>
+        <button onclick="agregar('6')">6</button>
+        <button onclick="operar('*')">×</button>
+        <button onclick="agregar('1')">1</button>
+        <button onclick="agregar('2')">2</button>
+        <button onclick="agregar('3')">3</button>
+        <button onclick="operar('-')">−</button>
+        <button onclick="agregar('0')">0</button>
+        <button onclick="agregar('.')">.</button>
+        <button onclick="calcular()">=</button>
+        <button onclick="operar('+')">+</button>
+        <button onclick="limpiar()" style="grid-column: span 4;">C</button>
       </div>
     </section>
 
     <section id="conversor">
-      <button class="btnVolver" onclick="mostrarSeccion('inicio')">← Volver al Menú</button>
+      <button class="btnVolver" onclick="mostrarSeccion('inicio')">← Volver</button>
       <h2 style="text-align: center; margin-bottom: 20px;">Conversor de Medidas</h2>
       <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
         <input id="valorEntrada" type="number" placeholder="Ingresa el valor" style="width: 80%; padding: 10px; border-radius: 8px; font-size: 1.1em;">
-
         <div style="display: flex; gap: 10px; justify-content: center;">
           <select id="unidadOrigen" style="padding: 10px; border-radius: 8px; font-size: 1.1em;">
             <option value="m">Metro (m)</option>
@@ -150,7 +154,6 @@
             <option value="ft">Pie (ft)</option>
             <option value="yd">Yarda (yd)</option>
           </select>
-
           <select id="unidadDestino" style="padding: 10px; border-radius: 8px; font-size: 1.1em;">
             <option value="m">Metro (m)</option>
             <option value="cm">Centímetro (cm)</option>
@@ -161,20 +164,48 @@
             <option value="yd">Yarda (yd)</option>
           </select>
         </div>
-
         <button onclick="convertirMedida()" class="btn-menu">Convertir</button>
-
         <div id="resultadoConversor" style="margin-top: 20px; font-size: 1.2em; color: #0f0; text-align: center;"></div>
       </div>
     </section>
   </div>
-
   <script>
     function mostrarSeccion(id) {
-      document.querySelectorAll('section').forEach(sec => {
-        sec.classList.remove('active');
-      });
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(id).classList.add('active');
+    }
+
+    let pantalla = document.getElementById('pantalla');
+    let operacion = '';
+    let nuevo = false;
+
+    function agregar(valor) {
+      if (pantalla.value === '0' || nuevo) {
+        pantalla.value = valor;
+        nuevo = false;
+      } else {
+        pantalla.value += valor;
+      }
+    }
+    function operar(op) {
+      operacion += pantalla.value + op;
+      nuevo = true;
+    }
+    function calcular() {
+      try {
+        operacion += pantalla.value;
+        let resultado = eval(operacion);
+        pantalla.value = resultado;
+        operacion = '';
+        nuevo = true;
+      } catch {
+        pantalla.value = 'Error';
+        operacion = '';
+      }
+    }
+    function limpiar() {
+      pantalla.value = '0';
+      operacion = '';
     }
 
     const factores = {
@@ -192,15 +223,12 @@
       const origen = document.getElementById("unidadOrigen").value;
       const destino = document.getElementById("unidadDestino").value;
       const resultadoDiv = document.getElementById("resultadoConversor");
-
       if (isNaN(valor)) {
         resultadoDiv.textContent = "Por favor ingresa un valor válido.";
         return;
       }
-
       const valorEnMetros = valor / factores[origen];
       const valorConvertido = valorEnMetros * factores[destino];
-
       resultadoDiv.textContent = `${valor} ${origen} = ${valorConvertido.toFixed(4)} ${destino}`;
     }
   </script>
